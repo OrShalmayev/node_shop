@@ -4,7 +4,7 @@ const Product = require('../models/Product');
 const Category = require('../models/Category');
 const User = require('../models/User');
 const slugify = require('slugify');
-const stripe = require("stripe")("sk_test_rO5MV2VagIefrqzQ12BfK1SF005bjEyypP");
+const stripe = require("stripe")(process.env.STRIPE);
 const cors = require('cors')({
     origin: true
 });
