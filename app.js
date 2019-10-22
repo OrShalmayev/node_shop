@@ -15,7 +15,7 @@ const multer = require('multer');
 const bcrypt = require('bcryptjs');
 var cors = require('cors')
 const CartController = require('./app/controllers/CartController');
-const isLogged = require('./middleware/isLogged');
+// const isLogged = require('./middleware/isLogged');
 const compression = require('compression')
 
 
@@ -67,7 +67,7 @@ app.use(cors())
             cb(null, `${hash}${file.originalname}`);
         },
     });
-    // filter for multer
+    // filter for multer test test
     const fileFilter = (req, file, cb) => {
         if( file.mimetype === 'image/png' ||
             file.mimetype === 'image/jpg' ||
