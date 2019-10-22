@@ -1,0 +1,99 @@
+<div class="product">
+    <div id="productImages">
+        <div id="sliderImages">
+            <div class="productImage">
+                <img src="/images/products/<%= product.image %>" alt="" srcset="" class="img-fluid">
+            </div>
+            </div>
+            <div class="productImage"
+                style="background-image: url(//i1.adis.ws/i/boohooamplience/mzz71662_white_xl_1?$product_image_main$)">
+            </div>
+            <div class="productImage"
+                style="background-image: url(//i1.adis.ws/i/boohooamplience/mzz71662_white_xl_3?$product_image_main$)">
+            </div>
+            <div class="productImage"
+                style="background-image: url(//i1.adis.ws/i/boohooamplience/mzz71662_white_xl_2?$product_image_main$)">
+            </div>
+        </div>
+        <div id="sliderIndex">
+        </div>
+    </div>
+
+    <div class="productInfo">
+        <h1 class="title"><%= product.name %></h1>
+        <span class="productId">Product: <%= product.name %></span><br>
+        <span>Category: <%= product.category_slug %></span><br>
+        <div class="subProdInfo">
+            <span class="price">Price: $<%= product.price %></span>
+            <br>
+        </div>
+
+        <p>Description: <%= product.description %></p>
+
+        <label>Sizes: <a href="#">Size Chart</a></label>
+        <div class="select-wrapper">
+            <select>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option>XXL</option>
+                <option>XXXL</option>
+            </select>
+        </div>
+
+        <div class="colors">
+            <div class="color selected" style="background-color: #222" title="Black"></div>
+            <div class="color" style="background-color: #FFF" title="White"></div>
+            <div class="color" style="background-color: #00F" title="Dark Blue"></div>
+            <div class="color" style="background-color: #08F" title="Light Blue"></div>
+        </div>
+        <% if (product.inStock > 0) { %>
+            <span class="stock"><%= product.inStock > 0 ? 'In Stock' : 'Out of stock' %> </span>
+        <div class="addToCart">
+            <div class="qntySection">
+                <span class="btn" data-type="remove">-</span>
+                <span id="qnty">1</span>
+                <span class="btn" data-type="add">+</span>
+            </div>
+            <a href="#">Add To Cart</a>
+        </div>
+        <% } else { %>
+            <span class="stock"><%= product.inStock > 0 ? 'In Stock' : 'Out of stock' %> </span>
+        <% } %>
+
+
+    </div>
+</div>
+
+<script>
+    (function(){
+        var slider = document.getElementById("sliderImages");
+        var sliderIndex = document.getElementById("sliderIndex");
+        var slidingImages = slider.children;
+        var amountOfImages = slidingImages.length;
+        var increment = 100 / amountOfImages;
+
+        slider.style.width = 100 * amountOfImages + "%";
+        slider.style.transform = "translateX(0%)";
+
+        for (var i = 1; i <= amountOfImages; i++) {
+            var node = document.createElement("div");
+            node.classList.add("slide");
+            if (i === 1) node.classList.add('active');
+            node.setAttribute("data-amount", (i - 1));
+            node.addEventListener("click", handleSlideClick);
+            sliderIndex.appendChild(node);
+        }
+
+        function handleSlideClick(e) {
+            for (var x = 0; x < sliderIndex.children.length; x++) {
+                sliderIndex.children[x].classList.remove("active");
+            }
+            e.target.classList.add("active");
+            var move = e.target.getAttribute('data-amount') * increment;
+            slider.style.transform = "translateX(-" + move + "%)";
+        }
+    })();
+    
+</script>

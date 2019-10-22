@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom float-right">
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="/cms/categories/create" class="btn btn-sm btn-primary">
+      Add Category
+    </a>
+  </div>
+</div>
+
+<h2>Section title</h2>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>#ID</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Slug</th>
+        <th>Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(category of categories) { %>
+        <% console.log(category) %>
+        <tr>
+          <td><%= category._id %></td>
+          <td><%= category.name %></td>
+          <td><img src="/images/<%= category.image %>" alt="" class="img-thumbnail"></td>
+          <td><%= category.description.split(' ').slice(1, 10).join(' ') %></td>
+          <td><%= category.slug %></td>
+          <td>
+            <form action="/cms/categories/<%= category._id %>?_method=DELETE" method="POST">
+              <%- CSRF %>
+              <%- DELETE %>
+              <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+            <a href="/cms/categories/<%= category._id %>"" class="btn btn-primary">Edit</button>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>

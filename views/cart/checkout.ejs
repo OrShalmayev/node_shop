@@ -1,0 +1,43 @@
+<div class="content-wrapper">
+    <div class="row">
+        <!-- Checkout-detail -->
+        <div class="col-md-6">
+            <div class="checkout-detail">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Qty</th>
+                            <th>Item</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (p of products) { %>
+                        <tr>
+                            <td><%= p.quantity %></td>
+                            <td><%= p.product_id.name %></td>
+                            <td>$<%= p.product_id.price %></td>
+                        </tr>
+                        <% } %>
+                        <!-- <tr>
+                            <td colspan="2">Shipping</td>
+                            <td>9.99</td>
+                        </tr> -->
+                        <tr>
+                            <td colspan="2">Total</td>
+                            <td>$<%= totalSum %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            <form action="/purchase" method="POST">
+                <%- CSRF %>
+                <input type="submit" value="Order">
+            </form>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end content-wrapper -->

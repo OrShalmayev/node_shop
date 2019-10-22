@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Or Shalmayev">
+    <title>Shop</title>
+    <script src="https://kit.fontawesome.com/64af342e22.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/product/">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- ---------------    CUSTOM STYLING    ------------------->
+    <% if(typeof customStyle != 'undefined') { %>
+    <%- customStyle.lightBox %>
+    <% } %>
+
+    <!-- Srtipe Css -->
+    <% if(typeof stripeCss != 'undefined' && stripeCss === true) { %>
+    <link rel="stylesheet" href="/css/stripe.css">
+    <% } %>
+    <!-- Custom styles for this template -->
+    <link href="/css/product.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
+</head>
+
+<body>

@@ -1,0 +1,85 @@
+      <h2>Section title</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th># Order ID</th>
+              <th>User id</th>
+              <th>User email</th>
+              <th>Order details</th>
+              <th>Operations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(o of orders) { %>
+              <tr>
+                <!-- ID -->
+                <td>
+                    <%= o._id %>
+                </td>
+                <!-- USER ID -->
+                <td>
+                    <%= o.user.user_id %>
+                </td>
+                <!-- USER EMAIL -->
+                <td>
+                    <%= o.user.email %>
+                </td>
+                <!-- ORDER DETAILS -->
+                <td>
+                    <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <button class="btn btn-outline-primary collapsed" type="button" data-toggle="collapse" data-target="#collapseOne<%= o._id %>" aria-expanded="false" aria-controls="collapseOne">
+                                    Show 
+                                </button>
+                            <div id="collapseOne<%= o._id %>" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <table class="table table-light">
+                                            <thead>
+                                                <tr>
+                                                    <th>#id</th>
+                                                    <th>Product</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total Paid</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              <% o.products.forEach((product) => { %>
+                                                <tr>
+                                                  <td><%= product.product_data._id %></td>
+                                                  <td><a href="{{ $product->attributes->productPath }}"><%= product.product_data.name %></a></td>
+                                                  <td>$<%= product.product_data.price %></td>
+                                                  <td><%= product.quantity %></td>
+                                                  <td><%= product.product_data.price * product.quantity %></td>
+                                                </tr>     
+                                              <% }) %>
+ 
+                                                
+                                            </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                
+                </td><!-- End Products Bought -->
+
+                <!-- DELETE -->
+                <td>
+                  <form action="/cms/orders/<%= o._id %>?_method=DELETE" method="POST">
+                    <%- CSRF %>
+                    <%- DELETE %>
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                  </form>
+                  <!-- EDIT -->
+                  <a href="/cms/orders/<%= o._id %>" class="btn btn-primary">Edit</button>
+                </td>
+
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>

@@ -1,0 +1,41 @@
+<h1>Edit <%= category.name %></h1>
+<form method="POST" action="/cms/categories/<%= category._id %>?_method=PUT" enctype="multipart/form-data">
+    <%- CSRF %>
+    <%- PUT %>
+    <!-- Product Name -->
+    <div class="form-group">
+        <label for="id_name">Category Name:</label>
+        <input type="text" class="form-control" id="id_name" name="name" placeholder="Category Name" value="<%= category.name %>">
+    </div>
+
+    <!-- Category Description -->
+    <div class="form-group">
+        <label for="id_description">Category Description: </label>
+        <textarea id="id_description" class="form-control" name="description" rows="3" placeholder="Add A Description..."><%= category.description %></textarea>
+    </div>
+
+    <input type="hidden" name="_id" value="<%= category._id %>">
+
+
+        <!-- Image -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2 imgUp">
+                    <div class="imagePreview" >
+    
+                    </div>
+                    <label class="btn btn-primary">
+                        Upload<input type="file" name="image" class="uploadFile img" value="Upload Photo"
+                            style="width: 0px;height: 0px;overflow: hidden;">
+                    </label>
+                </div><!-- col-2 -->
+                <!-- Plus symbol -->
+                <i class="fa fa-plus imgAdd">+</i>
+            </div><!-- row -->
+        </div><!-- container -->
+
+    <!-- Submit button -->
+    <div class="form-group">
+        <input type="submit" value="Update Category" class="btn btn-primary form-control">
+    </div>
+</form>

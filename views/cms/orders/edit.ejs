@@ -1,0 +1,89 @@
+<h1><%= pageTitle %></h1>
+<form method="POST" action="/cms/orders/<%= order._id %>/?_method=PUT" class="edit-order">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%- CSRF %>
+            <%- PUT %>
+            <% order.products.forEach( p => { %>
+
+            <tr>
+
+                <!-- PRODUCT NUMBER -->
+                <th scope="row">1</th>
+
+                <!-- PRODUCT NAME-->
+                <td>
+                    <div class="form-group my-3">
+                        <select class="browser-default custom-select" name="name">
+                            <!-- <option selected>Select Product</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option> -->
+                            <option value="<%= p.product_data.name %>" selected><%= p.product_data.name %></option>
+                        </select>
+                    </div>
+                </td>
+
+                <!-- PRODUCT PRICE -->
+                <td>
+                    <div class="form-group my-3">
+                        <input
+                            class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'is-invalid' : '' %>"
+                            type="number" name="price" placeholder="Price" value="<%= p.product_data.price %>" required>
+                    </div>
+                </td>
+                <!-- TOTAL  -->
+                <td>
+                    <div class="form-group my-3">
+                        <input
+                            class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'is-invalid' : '' %>"
+                            type="number" name="quantity" placeholder="QTY" value="<%= p.quantity %>" required>
+                    </div>
+                </td>
+                <!-- Submit button -->
+                <td>
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-primary form-control">
+                    </div>
+                </td>
+            </tr>
+            <% }) %>
+
+        </tbody>
+    </table>
+</form>
+
+<!-- TOTAL PAID -->
+<div class="row my-5">
+    <div class="col-7 float-left"></div>
+    <div class="col-5 float-right">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Total Paid:</td>
+                    <td>
+                        <div class="form-group my-3">
+                            <input
+                                class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'is-invalid' : '' %>"
+                                type="number" id="inputTotal" name="total" placeholder="Total Paid"
+                                value="<%= order.email %>" required>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<script src="/js/edit_order.js"></script>

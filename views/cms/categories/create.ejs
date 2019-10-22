@@ -1,0 +1,39 @@
+<h1>Add Category</h1>
+<form method="POST" action="/cms/categories" enctype="multipart/form-data">
+    <%- CSRF %>
+    <!-- Product Name -->
+    <div class="form-group">
+        <label for="id_name">Category Name:</label>
+        <input type="text" class="form-control" id="id_name" name="name" placeholder="Category Name">
+    </div>
+
+    <!-- Category Description -->
+    <div class="form-group">
+        <label for="id_description">Category Description: </label>
+        <textarea id="id_description" class="form-control" name="description" rows="3" placeholder="Add A Description..."></textarea>
+    </div>
+    
+
+        <!-- Image -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2 imgUp">
+                    <div class="imagePreview" >
+    
+                    </div>
+                    <label class="btn btn-primary">
+                        Upload<input type="file" name="image" class="uploadFile img" value="Upload Photo"
+                            style="width: 0px;height: 0px;overflow: hidden;">
+                    </label>
+                </div><!-- col-2 -->
+                <!-- Plus symbol -->
+                <i class="fa fa-plus imgAdd">+</i>
+            </div><!-- row -->
+        </div><!-- container -->
+
+
+    <!-- Submit button -->
+    <div class="form-group">
+        <input type="submit" value="Add Category" class="btn btn-primary form-control">
+    </div>
+</form>

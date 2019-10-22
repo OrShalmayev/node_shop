@@ -1,0 +1,36 @@
+<h1><%= pageTitle %></h1>
+<form method="POST" action="/cms/users/<%= user._id %>?_method=PUT" enctype="multipart/form-data">
+    <%- CSRF %>
+    <%- PUT %>
+
+        <!-- USERNAME -->
+        <div class="form-group my-3">
+            <label for="inputUsername" class="sr-only">Username: </label>
+            <input 
+            class="form-control <%= validationErrors.find(e => e.param === 'username') ? 'is-invalid' : '' %>"
+            type="text" 
+            id="inputUsername" 
+            name="username" 
+            placeholder="Username"  
+            value="<%= user.username %>" 
+            required autofocus>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group my-3">
+            <label for="inputEmail" class="sr-only">Email address: </label>
+            <input 
+            class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'is-invalid' : '' %>"
+            type="email" 
+            id="inputEmail" 
+            name="email" 
+            placeholder="Email address" 
+            value="<%= user.email %>" 
+            required >
+        </div>
+
+    <!-- Submit button -->
+    <div class="form-group">
+        <input type="submit" value="Update <%= user.username %>" class="btn btn-primary form-control">
+    </div>
+</form>

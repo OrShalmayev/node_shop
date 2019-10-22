@@ -1,0 +1,41 @@
+ <h2><%= pageTitle %></h2>
+ <div class="table-responsive">
+     <table class="table table-striped table-sm">
+         <thead>
+             <tr>
+                 <th>#ID</th>
+                 <th>Name</th>
+                 <th>Email</th>
+                 <th>Last Login</th>
+                 <th>Created At</th>
+             </tr>
+         </thead>
+         <tbody>
+             <% for(user of users) { %>
+             <tr>
+                 <td><%= user._id %></td>
+                 <td>
+                     <%= user.username %>
+                 </td>
+                 <td>
+                     <%= user.email %>
+                 </td>
+                 <td>
+                     <%= AppHelper.beautyTime( user.loggedInAt.toString() ) %>
+                 </td>
+                 <td>
+                     <%= AppHelper.beautyTime( user.created_at.toString() )%>
+                 </td>
+                 <td>
+                     <form action="/cms/users/<%= user._id %>?_method=DELETE" method="POST">
+                         <%- CSRF %>
+                         <%- DELETE %>
+                         <input type="submit" value="Delete" class="btn btn-danger">
+                     </form>
+                     <a href="/cms/users/<%= user._id %>" class="btn btn-primary">Edit</button>
+                 </td>
+             </tr>
+             <% } %>
+         </tbody>
+     </table>
+ </div>

@@ -1,0 +1,25 @@
+<% if(categories.length > 0) { %>
+<h1>Categories</h1>
+<div class="row">
+    <% for(category of categories) { %>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="images/<%= category.image %>" alt="Card image cap">
+            <div class="card-body">
+                <h2><a href="/shop/<%= category.slug %>"><%= category.name %></a></h2>
+                <p class="card-text"><%= category.description %></p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="/shop/<%= category.slug %>" class="btn btn-sm btn-outline-secondary">View Category</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<!-- end .row -->
+<% } else { %>
+<h1>No categories...</h1>
+<% } %>

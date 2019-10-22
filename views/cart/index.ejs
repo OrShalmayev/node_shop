@@ -1,0 +1,151 @@
+<!-- If Cart is not empty then show the table.. -->
+    <h1 class="text-secondary text-center my-5">Shopping Cart </h1>
+    <% if (products && products.length > 0) { %>
+        <table class="table mb-5">
+        <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                    <!-- <th scope="col">Discount(%)</th> -->
+                    <!-- <th scope="col">After Discount</th>  -->
+                    <!-- <th scope="col">Options</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <% for (p of products) { %>
+                    <tr>
+                        <!-- ITEM-->
+                        <th scope="row">
+                            <img src="<%= p.image %>" alt="" width="100" height="100">
+                            <a href="<%= p.product_id.path %>"><%= p.product_id.name %></a>
+                        </th>
+                        <!-- PRICE -->
+                        <td>$<%= p.product_id.price %></td>
+                        <!-- QUANTITY -->
+                        <td>    
+                               
+                                <div class="qntySection">
+                                    <%-CSRF%>
+                                    <button data-op="minus" class="minus btn btn-outline-danger btn-remove" data-pid="<%=p.product_id._id%>" data-token="<%=csrf%>">-</button>
+                                    <span class="qnty mx-3" ><%= p.quantity %></span>
+                                    <button data-op="plus" class="plus btn btn-outline-primary btn-add"    data-pid="<%=p.product_id._id%>" data-token="<%=csrf%>">+</button>
+                                </div>
+                        </td>
+                        <!-- TOTAL PRICE -->
+                        <td>$<%= p.product_id.price * p.quantity  %></td>
+
+                        
+                        <td>
+                            <form action="/cart/<%= p.product_id._id %>?_method=DELETE" method="post" class="cart-form">
+                                <%-CSRF%>
+                                <%-DELETE%>
+                                <button type="submit" class="btn btn-outline-danger add_qty_btn">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <div class="row my-5">
+            <div class="col-md-8 float-left"></div>
+            <div class="col-md-4 float-right">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Total:</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Button for Checkout -->
+                <button class="form-control btn btn-primary" id="id_checkout_btn">CHECKOUT</button>
+
+                <form action="/checkout" method="POST" class="cart-form clear-cart" id="id_clear_cart">
+                    <%-CSRF%>
+                    <div class="form-group">
+                        <input type="submit" data-slug="" value="stripe data" class=" cart-form form-control btn btn-outline-warning">
+                    </div>
+                </form>
+                <!-- Button for Clearing the cart -->
+                <form action="" method="POST" class="cart-form clear-cart" id="id_clear_cart">
+                    <%-CSRF%>
+                    <div class="form-group">
+                        <input type="submit" data-slug="" value="Clear Cart" class=" cart-form form-control btn btn-outline-warning">
+                    </div>
+                </form>
+            </div>
+        </div>
+    <% }else{ %>
+    <!-- If no Products in cart then show this -->
+        <p>No Products In Cart...</p>
+         <a href="/shop" class="btn btn-outline-primary">Start Shopping Now</a>
+    <% } %>
+
+
+    <script>
+        let qntySection = document.querySelectorAll('.qntySection');
+        Array.from(qntySection).forEach( elem => {
+            elem.addEventListener('click', (e)=>{
+                let total = elem.parentElement.nextElementSibling;
+                minusBtn = elem.querySelector('.minus');
+                plusBtn = elem.querySelector('.plus');
+                let op = e.target.dataset.op;
+                if(op === 'minus' || op === 'plus'){
+
+                        let pid = e.target.dataset.pid;
+                        let csrf = e.target.dataset.token;
+                        let qnty = e.target.parentNode.querySelector('.qnty');
+                        if(op === 'minus'){
+                            if(parseInt(qnty.textContent) > 1){
+                                qnty.textContent = parseInt(qnty.textContent) - 1;
+                            }
+                        }else{
+                            qnty.textContent = parseInt(qnty.textContent) + 1;
+                        }
+                        fetch(`http://localhost:3000/cart/${pid}/?op=${op}`,{
+                        method: 'PUT',
+                        headers: {
+                            'csrf-token': csrf,
+                        }
+                        })
+                        .then((result) => {
+                            return result.json();
+                        })
+                        .then(resData=>{
+                            console.log(resData)
+                            total.textContent = `$ ${resData.total}`;
+                        }) 
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                    }
+                });
+        })
+    </script>
+
+    <script>
+        var stripe = Stripe('pk_test_aUL6PqHRwRLBbxOhDMz7c3Uv00bBp0IsQQ');
+
+        function pay(products){
+            stripe.redirectToCheckout({
+            // Make the id field from the Checkout Session creation API response
+            // available to this file, so you can provide it as parameter here
+            // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+            sessionId: "<%= sessionId %>",
+            
+            }).then(function (result) {
+            // If `redirectToCheckout` fails due to a browser or network
+            // error, display the localized error message to your customer
+            // using `result.error.message`.
+            });
+        }
+
+        id_checkout_btn.addEventListener('click', pay);
+
+    </script>
