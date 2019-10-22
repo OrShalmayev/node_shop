@@ -67,7 +67,7 @@ app.use(cors())
             cb(null, `${hash}${file.originalname}`);
         },
     });
-
+    // filter for multer
     const fileFilter = (req, file, cb) => {
         if( file.mimetype === 'image/png' ||
             file.mimetype === 'image/jpg' ||
