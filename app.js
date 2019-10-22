@@ -1,7 +1,7 @@
 /******************************************** LIBRARIES ************************************************/
 require('dotenv').config()
 const path = require('path');
-const request = require('request');
+// const request = require('request');
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
